@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+
+
+  <display-name>wx</display-name>
+  
+  <servlet>
+  	<servlet-name>dispatcherServlet</servlet-name>
+  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  	<init-param>
+  		<param-name>contextConfigLocation</param-name>
+  		<!-- //不加* 默认找第一个classpath下 classpath*:application.xml
+			//可以多个通配符    classpath*:application*.xml  找出所有classpath下-->
+  		<param-value>classpath:application*.xml</param-value>
+  		<!-- /WEB-INF/dispatcherServlet-servlet.xml 另一种配置,可以配置不同的servlet所依赖的context-->
+  	</init-param>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>dispatcherServlet</servlet-name>
+  	<url-pattern>/</url-pattern>
+  </servlet-mapping>
+  <!-- spring用到forward("/WEB-INF/jsp/*.jsp")
+	而forward当然是又要经过web.xml的映射的，
+	然后，在URL匹配时，
+	<url-pattern>/</url-pattern> 不会匹配到*.jsp，不会进入spring的DispatcherServlet类
+	<url-pattern>/*</url-pattern> 会匹配*.jsp，导致进入spring的DispatcherServlet类，然后去寻找controller，接着找不到对应的controller所以报错。
+-->
+  <welcome-file-list>
+  	<welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  
+</web-app>

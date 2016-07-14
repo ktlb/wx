@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:ctx="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+						http://www.springframework.org/schema/aop        
+						http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+						http://www.springframework.org/schema/mvc
+						http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-4.0.xsd
+">
+
+<ctx:component-scan base-package="controller">
+<!-- 		容器级别的,容器会在加载时,去扫描  -->
+</ctx:component-scan>
+<!-- 静态资源访问,因为 所有请求都被拦截了,而且没有配置uri的controller,通过以下配置访问 -->
+<mvc:resources location="/WEB-INF/img/" mapping="/image/*" cache-period="5"></mvc:resources>
+<mvc:annotation-driven></mvc:annotation-driven>
+<!-- 相当于下面  这些默认的driven 默认都会开始simpleurl 和beannameurl 2个mapping-->
+<!-- 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"> -->
+<!-- 		<property name="order" value="1"/>  优先级,多个handlermapping时使用 -->
+<!--     </bean> -->
+<!-- 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"> -->
+<!-- 		<property name="cacheSeconds" value="5"></property> -->
+<!-- 	</bean> -->
+	
+	
+<!-- 	<mvc:resources location="/WEB-INF/img/" mapping="/image/*" cache-period="5"></mvc:resources> 
+		等于下面这几个配置
+ -->
+<!-- 	<bean id="handler" class="org.springframework.web.servlet.resource.ResourceHttpRequestHandler"> -->
+<!-- 		<property name="locations"  value="/WEB-INF/img/"/> -->
+<!-- 		<property name="cacheSeconds" value="5"/> -->
+<!-- 	</bean> -->
+<!-- 	<bean  class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping" depends-on="handler"> -->
+<!-- 		<property name="mappings" value="/image/*=handler"/> -->   <!-- 指向上面的handler ID -->
+<!-- 	</bean> -->
+<!-- 	<bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter"></bean> -->
+	
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/pages/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+</beans>
